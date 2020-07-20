@@ -7,13 +7,13 @@ c4d.CallCommand(12305, 12305)#打开控制台
 
 print("Author @地球虫子 Homepage：space.bilibili.com/4708292\n \n \nScanning folders...")
 
-#【在这里填入后缀名】
+####在这里填入后缀名####
 ####Input suffix of image files here####
 suffix = ("png", "jpg", "jpeg", "bmp", "exr", "psd")
 
-#【在这里填入通道名】
+####在这里填入通道名####
 ####Input names of channels here####
-channel_name = ("diffuse", "reflection", "glossiness", "height", "normal")
+channel_name = ("diffuse", "reflection", "height", "normal")
 
 
 def main():
@@ -96,24 +96,26 @@ def main():
                                         break
                                     
                                     #先判断这是什么通道的文件，再将texture赋予new_material
+                                    ####在这里添加通道！####
+                                    ####Add channels here!####
                                     #diffuse通道
                                     if cur_channel == "diffuse":
+                                        new_material[c4d.MATERIAL_USE_COLOR] = 1
                                         new_material[c4d.MATERIAL_COLOR_SHADER] = shader
                                         new_material.InsertShader(shader)
                                     #reflection通道
                                     if cur_channel == "reflection":
+                                        new_material[c4d.MATERIAL_USE_REFLECTION] = 1
                                         new_material[c4d.REFLECTION_LAYER_COLOR_TEXTURE] = shader
-                                        new_material.InsertShader(shader)
-                                    #glossiness通道
-                                    if cur_channel == "glossiness":
-                                        new_material[c4d.MATERIAL_COLOR_SHADER] = shader
                                         new_material.InsertShader(shader)
                                     #height通道
                                     if cur_channel == "height":
+                                        new_material[c4d.MATERIAL_USE_BUMP] = 1
                                         new_material[c4d.MATERIAL_BUMP_SHADER] = shader
                                         new_material.InsertShader(shader)
                                     #normal通道
                                     if cur_channel == "normal":
+                                        new_material[c4d.MATERIAL_USE_NORMAL] = 1
                                         new_material[c4d.MATERIAL_NORMAL_SHADER] = shader
                                         new_material.InsertShader(shader)
                                     
@@ -137,7 +139,7 @@ def main():
                     
         print("\n ")#在两个文件夹之间换行
         
-        print
+        print("%s%s" %("Warning, textures listed bellow maybe have some problems:", warnning_list))
                     
 if __name__=='__main__':
     main()
